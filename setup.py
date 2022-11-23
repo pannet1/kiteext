@@ -6,5 +6,5 @@ setup(name='kiteext-2022',
       author='b karthick',
       author_email='prog@ecomsense.in',
       url='https://github.com/pannet1/kiteext/',
-      packages=['kiteext']
+      packages=['kiteext-2022']
       )
