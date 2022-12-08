@@ -41,7 +41,8 @@ class KiteExt(KiteConnect):
         self.reqsession = requests.Session()
 
         self.enctoken = enctoken
-        self.headers['Authorization'] = 'enctoken {}'.format(self.enctoken)
+        self.headers['Authorization'] = 'enctoken {}'.format(
+            self.enctoken.decode('utf-8').strip())
 
     def __init__(self, api_key='kitefront', userid=None, *args, **kw):
         KiteConnect.__init__(self, api_key=api_key, *args, **kw)
