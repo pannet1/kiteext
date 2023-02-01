@@ -132,6 +132,7 @@ class KiteExt(KiteConnect):
         elif 'csv' in r.headers['content-type']:
             return r.content
         else:
-            raise ex.DataException('Unknown Content-Type ({content_type}) with response: ({content})'.format(
+            raise ex.DataException('Unknown Content-Type ({content_type}) with response: ({content}) for ({headers)}'.format(
                 content_type=r.headers['content-type'],
+                headers=headers,
                 content=r.content))
