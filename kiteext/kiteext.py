@@ -4,12 +4,15 @@ import kiteconnect.exceptions as ex
 import logging
 from six.moves.urllib.parse import urljoin
 import requests
+from os import path
+
 from kiteconnect import KiteConnect, KiteTicker
 
 log = logging.getLogger(__name__)
 
 
 class KiteExt(KiteConnect):
+
     def login_with_credentials(self, userid, password, pin):
         self.headers = {
             'x-kite-version': '3',
@@ -23,16 +26,20 @@ class KiteExt(KiteConnect):
             'user_id': self.user_id,
             'password': self.password
         })
+
         r = self.reqsession.post(self.root + self._routes['api.twofa'], data={
             'request_id': r.json()['data']['request_id'],
             'twofa_value': self.twofa,
             'user_id': r.json()['data']['user_id']
         })
+
         self.enctoken = r.cookies.get('enctoken')
+        self.public_token = r.cookies.get('public_token')
         self.user_id = r.cookies.get('user_id')
+
         self.headers['Authorization'] = 'enctoken {}'.format(self.enctoken)
 
-    def login_using_enctoken(self, userid, enctoken):
+    def login_using_enctoken(self, userid, enctoken, public_token):
         self.headers = {
             'x-kite-version': '3',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.128 Safari/537.36'
@@ -41,6 +48,9 @@ class KiteExt(KiteConnect):
         self.reqsession = requests.Session()
 
         self.enctoken = enctoken
+        self.public_token = public_token
+        #self.user_id = r.cookies.get('user_id')
+
         self.headers['Authorization'] = 'enctoken {}'.format(self.enctoken)
 
     def __init__(self, api_key='kitefront', userid=None, *args, **kw):
@@ -132,7 +142,6 @@ class KiteExt(KiteConnect):
         elif 'csv' in r.headers['content-type']:
             return r.content
         else:
-            raise ex.DataException('Unknown Content-Type ({content_type}) with response: ({content}) for ({headers)}'.format(
+            raise ex.DataException('Unknown Content-Type ({content_type}) with response: ({content})'.format(
                 content_type=r.headers['content-type'],
-                headers=headers,
                 content=r.content))
