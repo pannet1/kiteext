@@ -7,7 +7,7 @@ repository = "https://github.com/pannet1/kiteext"
 
 
 [tool.poetry.dependencies]
-kiteconnect = "^0.0.1"
+kiteconnect = ">=0.0.1"
 
 [build-system]
 requires = ["poetry-core"]
