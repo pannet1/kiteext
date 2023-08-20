@@ -3,7 +3,6 @@ name = "kiteext"
 version = "1.0.0"
 description = "extn to kite"
 authors = ["unknown"]
-readme = "README.md"
 repository = "https://github.com/pannet1/kiteext"
 
 
