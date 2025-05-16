@@ -3,9 +3,7 @@ import json
 import six
 import kiteconnect.exceptions as ex
 import logging
-from six.moves.urllib.parse import urljoin
 import requests
-from os import path
 
 from kiteconnect import KiteConnect, KiteTicker
 
@@ -50,7 +48,7 @@ class KiteExt(KiteConnect):
             self.root + self._routes["api.login"],
             data={"user_id": self.user_id, "password": self.password},
         )
-        print(f"KiteExt error? {r}")
+        print(f"kiteext login with credentials r contains {r}")
         r = self.reqsession.post(
             self.root + self._routes["api.twofa"],
             data={
