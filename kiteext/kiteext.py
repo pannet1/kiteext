@@ -50,7 +50,7 @@ class KiteExt(KiteConnect):
             self.root + self._routes["api.login"],
             data={"user_id": self.user_id, "password": self.password},
         )
-
+        print(f"KiteExt error? {r}")
         r = self.reqsession.post(
             self.root + self._routes["api.twofa"],
             data={
@@ -262,4 +262,3 @@ class KiteExt(KiteConnect):
                     content_type=r.headers["content-type"], content=r.content
                 )
             )
-
